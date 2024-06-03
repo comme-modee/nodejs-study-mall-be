@@ -10,6 +10,10 @@ const productSchema = Schema({
         type: String,
         required: true
     },
+    size: {
+        type: Array,
+        required: true
+    },
     image: {
         type: String,
         required: true
@@ -42,7 +46,9 @@ const productSchema = Schema({
 
 productSchema.methods.toJSON = function () {
     const obj = this._doc;
-
+    delete obj.__v;
+    delete obj.updateAt;
+    delete obj.createAt;
     return obj;
 }
 
