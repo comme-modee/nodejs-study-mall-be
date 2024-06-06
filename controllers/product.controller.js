@@ -19,7 +19,7 @@ productController.getProducts = async (req, res) => {
         const { page, name } = req.query;
         const cond = name ? {name: {$regex: name, $options: "i"}} : {};
         let query = Product.find(cond);
-        let res = { status: "success" };
+        let response = { status: "success" };
 
         if(page) {
             //pageSize는 한페이지에 보여줄 상품갯수
@@ -27,12 +27,12 @@ productController.getProducts = async (req, res) => {
 
             const totalItemNum = await Product.find(cond).count(); //count(): 아이템의 갯수를 알수있음
             const totalPage = Math.ceil(totalItemNum/pageSize);
-            res.totalPage = totalPage;
+            response.totalPage = totalPage;
         }
         
         const productList = await query.exec();
-        res.data = productList;
-        res.status(200).json(res);
+        response.data = productList;
+        res.status(200).json(response);
     } catch (error) {
         res.status(400).json({ status: 'fail', error: error.message })
     }
