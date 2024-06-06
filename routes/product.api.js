@@ -17,7 +17,7 @@ router.put('/:id',
     productController.updateProduct
 )
 
-router.put('/:id', 
+router.delete('/:id', 
     authController.authenticate, 
     authController.checkAdminPermission, 
     productController.deleteProduct
