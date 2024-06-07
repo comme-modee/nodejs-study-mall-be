@@ -11,7 +11,7 @@ router.post('/',
 
 router.get('/', productController.getProducts)
 
-router.post('/:id', 
+router.put('/:id', 
     authController.authenticate, 
     authController.checkAdminPermission, 
     productController.updateProduct
