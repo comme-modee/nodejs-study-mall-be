@@ -20,7 +20,7 @@ authController.authenticate = async (req, res, next) => {
     }
 }
 
-authController.checkAdminPermisstion = async (req, res, next) => {
+authController.checkAdminPermission = async (req, res, next) => {
     try {
         const { userId } = req;
         const user = await User.findById(userId);
