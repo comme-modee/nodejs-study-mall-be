@@ -62,7 +62,7 @@ cartController.deleteCartItem = async (req, res) => {
       await cart.save();
       res.status(200).json({ status: 'success', cartItemQty: cart.items.length });
     } catch (error) {
-      return res.status(400).json({ status: "fail", error: error.message });
+      res.status(400).json({ status: "fail", error: error.message });
     }
 };
 
