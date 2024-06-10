@@ -55,6 +55,6 @@ orderSchema.methods.toJSON = function () {
     return obj;
 }
 
-const Order = mongoose.model('Cart', orderSchema)
+const Order = mongoose.model('Order', orderSchema)
 
 module.exports = Order;
