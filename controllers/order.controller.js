@@ -1,5 +1,7 @@
 const orderController = {};
 const Order = require('../models/Order');
+const { randomStringGenerator } = require('../utils/randomStringGenerator');
+const productController = require('./product.controller');
 
 orderController.createOrder = async (req, res) => {
     try {
@@ -18,12 +20,13 @@ orderController.createOrder = async (req, res) => {
             totalPrice,
             shipTo,
             contact,
-            items: orderList
+            items: orderList,
+            orderNum: randomStringGenerator()
         });
 
         await newOrder.save();
         
-        res.status(200).json({ status: 'success', orderNumber: });
+        res.status(200).json({ status: 'success', orderNum: newOrder.orderNum });
     } catch (error) {
         res.status(400).json({ status: 'fail', error: error.message })
     }
