@@ -5,3 +5,5 @@ const randomStringGenerator = () => {
 
   return randomString;
 }
+
+module.exports = { randomStringGenerator };
