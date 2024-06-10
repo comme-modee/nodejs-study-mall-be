@@ -6,6 +6,8 @@ orderController.createOrder = async (req, res) => {
         const { userId } = req;
         const { shipTo, contact, totalPrice, orderList } = req.body;
 
+        const insufficientStockItems = await productController.checkItemListStock(orderList);
+
         const newOrder = new Order({
             userId,
             totalPrice,
