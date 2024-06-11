@@ -48,4 +48,20 @@ orderController.getOrderList = async (req, res) => {
     }
 }
 
+orderController.getOrderDetailInfo = async (req, res) => {
+    try {
+        const orderId = req.params.id;
+        const orderDetailInfo = await Order.findById(orderId).populate({ 
+            path: 'items', 
+            populate: { 
+                path: 'productId', 
+                model: 'Product' 
+            }
+        });
+        res.status(200).json({ status: 'success', orderDetailInfo: orderDetailInfo });
+    } catch (error) {
+        res.status(400).json({ status: 'fail', error: error.message })
+    }
+}
+
 module.exports = orderController;

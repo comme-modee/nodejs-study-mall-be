@@ -13,4 +13,9 @@ router.get('/',
     orderController.getOrderList
 );
 
+router.get('/:id',
+    authController.authenticate, 
+    orderController.getOrderDetailInfo
+)
+
 module.exports = router;
