@@ -114,8 +114,6 @@ productController.checkItemListStock = async (itemList) => {
         })
     );
 
-    console.log(insufficientStockItems)
-
     //재고부족 아이템이 없는 경우 재고 감소 진행
     if(insufficientStockItems.length === 0) {
         await Promise.all(

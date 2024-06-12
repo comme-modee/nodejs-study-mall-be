@@ -26,7 +26,6 @@ router.put("/:id",
 router.get("/qty", 
     authController.authenticate, 
     cartController.getCartQty
-
 );
 
 module.exports = router;

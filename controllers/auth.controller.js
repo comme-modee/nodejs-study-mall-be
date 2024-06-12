@@ -14,6 +14,7 @@ authController.authenticate = async (req, res, next) => {
             if(error) throw new Error('Invalid token');
             req.userId = payload._id;
         })
+        console.log('1')
         next();
     } catch (error) {
         res.status(400).json({status: 'fail', error: error.message})
@@ -22,6 +23,7 @@ authController.authenticate = async (req, res, next) => {
 
 authController.checkAdminPermission = async (req, res, next) => {
     try {
+        console.log('2')
         const { userId } = req;
         const user = await User.findById(userId);
         if(user.level !== 'admin') throw new Error('No permission');
