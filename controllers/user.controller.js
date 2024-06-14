@@ -2,6 +2,7 @@ const User = require("../models/User");
 const bcrypt = require('bcryptjs');
 const { OAuth2Client } = require('google-auth-library');
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const { createCoupons } = require('../utils/createCoupons');
 
 const userController = {};
 
@@ -19,7 +20,7 @@ userController.createUser = async (req, res) => {
         const hash = bcrypt.hashSync(password, salt);
 
         //새 유저 저장
-        const newUser = new User({ name, email, password:hash, level:level?level:'customer' });
+        const newUser = new User({ name, email, password:hash, level:level?level:'customer', coupons: createCoupons() });
         await newUser.save();
         res.status(200).json({ status: 'success' });
 

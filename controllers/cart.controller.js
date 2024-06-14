@@ -1,4 +1,5 @@
 const Cart = require("../models/Cart");
+const User = require("../models/User");
 
 const cartController = {};
 
@@ -32,6 +33,40 @@ cartController.addItemToCart = async (req, res) => {
         res.status(200).json({ status: 'success', data: cart, cartItemQty: cart.items.length });
     } catch (error) {
         res.status(400).json({ status: 'fail', error: error.message })
+    }
+}
+
+cartController.useCoupon = async (req, res) => {
+  try {
+      const { userId } = req;
+      const { type } = req.body;
+
+      // const cart = await Cart.findOne({ userId }).populate({
+      //   path: 'items',
+      //   populate: {
+      //     path: 'productId',
+      //     model: 'Product',
+      //   },
+      // });
+
+      // if (!cart) throw new Error('카트가 없습니다.');
+
+      // console.log('카트', cart)
+      
+      const user = await User.findOne({ _id: userId });
+
+      user.coupons.filter((item) => {
+        if(item.type === type) {
+          item.valid = false;
+          return;
+        }
+      })
+
+      await user.save();
+
+      res.status(200).json({ status: 'success' });
+    } catch (error) {
+      res.status(400).json({ status: 'fail', error: error.message });
     }
 }
 

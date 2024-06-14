@@ -26,7 +26,8 @@ const orderSchema = Schema({
         required: true
     },
     orderNum: {
-        type: String },
+        type: String 
+    },
     items: [{
         productId: {
             type: mongoose.ObjectId,

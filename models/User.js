@@ -21,6 +21,14 @@ const userSchema = Schema({
     level: {
         type: String,
         default: 'customer'
+    },
+    coupons: {
+        type: Array,
+        default: []
+    },
+    reward: {
+        type: Number,
+        default: 1000
     }
 }, {timestamps: true})
 
