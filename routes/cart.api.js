@@ -28,9 +28,4 @@ router.get("/qty",
     cartController.getCartQty
 );
 
-router.post('/coupon', 
-    authController.authenticate, 
-    cartController.useCoupon
-);
-
 module.exports = router;

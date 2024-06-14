@@ -1,5 +1,6 @@
 const orderController = {};
 const Order = require('../models/Order');
+const User = require('../models/User');
 const { randomStringGenerator } = require('../utils/randomStringGenerator');
 const productController = require('./product.controller');
 const pageSize = 10; //한페이지에 보여줄 상품갯수
@@ -112,6 +113,28 @@ orderController.updateOrder = async (req, res) => {
     } catch (error) {
         res.status(400).json({ status: 'fail', error: error.message })
     }
+}
+
+orderController.useCoupon = async (req, res) => {
+    try {
+        const { userId } = req;
+        const { type } = req.body;
+        
+        const user = await User.findOne({ _id: userId });
+  
+        user.coupons.filter((item) => {
+          if(item.type === type) {
+            item.valid = false;
+            return;
+          }
+        })
+  
+        await user.save();
+  
+        res.status(200).json({ status: 'success' });
+      } catch (error) {
+        res.status(400).json({ status: 'fail', error: error.message });
+      }
 }
 
 module.exports = orderController;
