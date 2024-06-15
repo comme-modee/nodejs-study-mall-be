@@ -9,4 +9,14 @@ router.post('/google', userController.loginWithGoogle);
 router.get('/me', authController.authenticate, userController.getUser)
 router.put('/info/:id', authController.authenticate, userController.addInfo)
 
+router.post('/coupon', 
+    authController.authenticate, 
+    userController.useCoupon
+);
+
+router.post('/reward', 
+    authController.authenticate, 
+    userController.useReward
+);
+
 module.exports = router;

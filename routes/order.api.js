@@ -33,9 +33,4 @@ router.put('/:id',
     orderController.updateOrder
 );
 
-router.post('/coupon', 
-    authController.authenticate, 
-    orderController.useCoupon
-);
-
 module.exports = router;

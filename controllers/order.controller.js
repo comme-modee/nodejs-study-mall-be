@@ -122,29 +122,4 @@ orderController.updateOrder = async (req, res) => {
     }
 }
 
-orderController.useCoupon = async (req, res) => {
-    try {
-        const { userId } = req;
-        const { type } = req.body;
-        
-        const user = await User.findOne({ _id: userId });
-
-        const newCoupons = user.coupons.map((coupon) => {
-            if(coupon.type === type) {
-                return { ...coupon, valid: false };
-            } else {
-                return coupon;
-            }
-        });
-  
-        user.coupons = newCoupons;
-  
-        await user.save();
-  
-        res.status(200).json({ status: 'success', user: user });
-      } catch (error) {
-        res.status(400).json({ status: 'fail', error: error.message });
-      }
-}
-
 module.exports = orderController;
