@@ -96,4 +96,21 @@ userController.getUser = async (req, res) => {
     }
 }
 
+userController.addInfo = async (req, res) => {
+    try {
+        const { userId } = req;
+        const user = await User.findById(userId);
+        if(!user) throw new Error('Invalid token')
+        
+        const newCoupons = createCoupons();
+        user.coupons = newCoupons;
+        user.reward = 1000;
+
+        await user.save();
+        res.status(200).json({ status: 'success', user });
+    } catch (error) {
+        res.status(400).json({ status: 'error', error: error.message })
+    }
+}
+
 module.exports = userController;

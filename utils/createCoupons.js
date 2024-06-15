@@ -1,3 +1,5 @@
+const User = require("../models/User");
+
 const createCoupons = () => {
 
     const newUserCouponPack = [

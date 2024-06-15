@@ -26,9 +26,16 @@ orderController.createOrder = async (req, res) => {
             orderNum: randomStringGenerator()
         });
 
+        const newReward = Math.round(totalPrice * 0.01);
+        const user = await User.findById(userId);
+        if(user) {
+            user.reward += newReward;
+            await user.save();
+        }
+
         await newOrder.save();
         
-        res.status(200).json({ status: 'success', orderNum: newOrder.orderNum });
+        res.status(200).json({ status: 'success', orderNum: newOrder.orderNum, user });
     } catch (error) {
         res.status(400).json({ status: 'fail', error: error.message })
     }
@@ -121,17 +128,20 @@ orderController.useCoupon = async (req, res) => {
         const { type } = req.body;
         
         const user = await User.findOne({ _id: userId });
+
+        const newCoupons = user.coupons.map((coupon) => {
+            if(coupon.type === type) {
+                return { ...coupon, valid: false };
+            } else {
+                return coupon;
+            }
+        });
   
-        user.coupons.filter((item) => {
-          if(item.type === type) {
-            item.valid = false;
-            return;
-          }
-        })
+        user.coupons = newCoupons;
   
         await user.save();
   
-        res.status(200).json({ status: 'success' });
+        res.status(200).json({ status: 'success', user: user });
       } catch (error) {
         res.status(400).json({ status: 'fail', error: error.message });
       }
